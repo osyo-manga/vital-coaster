@@ -1,0 +1,112 @@
+*vital-coaster-highlight.txt*	バッファのハイライトを管理する
+
+==============================================================================
+概要					*vital-coaster-highlight-introduction*
+
+バッファのハイライトの管理を行います。
+
+
+
+==============================================================================
+使い方					*vital-coaster-highlight-usage*
+
+|vital-coaster-highlight-object-add()| 等でハイライトの設定を追加し、
+|vital-coaster-highlight-object-enable()| で任意のバッファにハイライトを適用し
+て使用します。
+>
+	let s:Highlight = vital#of("vital").import("Coaster.Highlight")
+	
+	" ハイライトを行うオブジェクトの生成
+	let s:highlighter = s:Highlight.make()
+	
+	" ハイライトの設定を追加
+	" この時点ではハイライトは行われない
+	call s:highlighter.add("alpha", "WarningMsg", '\l')
+	call s:highlighter.add("ALPHA", "Search", '\u')
+	call s:highlighter.add("number", "MoreMsg", '\d')
+	
+	
+	function! CoasterHighlight()
+		" 現在のバッファで
+		" add で設定したハイライトを有効にする
+		call s:highlighter.enable_all()
+	endfunction
+	
+	function! CoasterUnhighlight()
+		" 現在のバッファで
+		" add で設定したハイライトを無効にする
+		call s:highlighter.disable_all()
+	endfunction
+<
+
+
+==============================================================================
+インターフェース			*vital-coaster-highlight-interface*
+
+------------------------------------------------------------------------------
+関数					*vital-coaster-highlight-functions*
+
+make()				*vital-coaster-highlight-functions-make*
+	|vital-coaster-highlight-object| を生成します。
+
+
+==============================================================================
+ハイライトオブジェクト			*vital-coaster-highlight-object*
+
+ハイライトの管理を行うオブジェクトになります。
+
+					*vital-coaster-highlight-object-add()*
+object.add({name}, {group}, {pattern}[, {priority}])
+	{name} という名前のハイライトの設定を追加します。
+	この関数に設定を追加しただけではハイライトは行われません。
+	実際のハイライトは |vital-coaster-highlight-object-enable()|
+	等で行います。
+	{group}, {pattern}, {priority} は |matchadd()| の引数と同等です。
+
+object.is_added({name})		*vital-coaster-highlight-object-is_added()*
+	{name} という設定が |vital-coaster-highlight-object-add()| されている場合
+	は 1 をなければ 0 を返します。
+
+object.delete({name})		*vital-coaster-highlight-object-delete()*
+	|vital-coaster-highlight-object-add()| で設定した {name} を削除します。
+
+object.delete_by({expr})	*vital-coaster-highlight-object-delete_by()*
+	|vital-coaster-highlight-object-delete()| と同等ですが {expr} にマッチ
+	する設定のみを削除します。
+	{expr} には Vim script の式を記述する事ができ、|eval()| した結果が真に
+	なる設定を削除します。
+	また、{expr} 無いでは以下の |vital-coaster-highlight-object-add()| で
+	設定した変数が使用できます。
+	"name"
+	"group"
+	"pattern"
+	"priority"
+Example: >
+	" 大文字から始まる name の設定を削除する
+	call object.delete_by("name =~ '^\u'")
+<
+
+object.delete_all({name})	*vital-coaster-highlight-object-delete_all()*
+	|vital-coaster-highlight-object-add()| で設定したすべての設定を削除しま
+	す。
+
+object.enable({name})		*vital-coaster-highlight-object-enable()*
+	現在のバッファで |vital-coaster-highlight-object-add()| で設定した
+	{name} のハイライトを行います。
+
+object.enable_all({name})	*vital-coaster-highlight-object-enable_all()*
+	現在のバッファで |vital-coaster-highlight-object-add()| で設定した
+	すべての設定のハイライトを行います。
+
+object.disable({name})		*vital-coaster-highlight-object-disable()*
+	現在のバッファで |vital-coaster-highlight-object-enable()|等で行った
+	{name} のハイライトを無効にします。
+
+object.disable_all()		*vital-coaster-highlight-object-disable_all()*
+	現在のバッファで |vital-coaster-highlight-object-enable()|等で行った
+	すべてのハイライトを無効にします。
+
+
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl
