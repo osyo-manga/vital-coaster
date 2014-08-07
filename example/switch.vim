@@ -16,7 +16,7 @@ function! s:change(flag)
 	" カーソル位置から \w\+ にマッチする範囲を取得する
 	let [first, last] = s:Search.region('\w\+', "Wncb", "Wnce")
 
-	" Buffer と Search で使用する位置の値が違うので合わせる
+	" Buffer と Search で使用する位置の形式が違うので合わせる
 	let first = [0] + first + [0]
 	let last  = [0] + last + [0]
 
