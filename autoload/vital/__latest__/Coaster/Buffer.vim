@@ -91,6 +91,27 @@ function! s:yank(wise, first, last)
 endfunction
 
 
+function! s:delete(wise, first, last)
+	let old_view = winsaveview()
+	let old_selection = &selection
+	let &selection = 'inclusive'
+ 	let old_first = getpos("'[")
+ 	let old_last  = getpos("']")
+	let old_pos = getpos(".")
+	try
+		call s:_setpos("'[", a:first)
+		call s:_setpos("']", a:last)
+		execute printf('normal! `[%s`]"_d', a:wise)
+	finally
+		call s:_setpos("'[", old_first)
+		call s:_setpos("']", old_last)
+		let &selection = old_selection
+		call winrestview(old_view)
+		call s:_setpos(".", old_pos)
+	endtry
+endfunction
+
+
 function! s:_as_pos(pos)
 	return len(a:list) == 2 ? [0] + a:pos + [0] : a:pos
 endfunction
@@ -262,9 +283,13 @@ endfunction
 
 function! s:execute(expr, cmd)
 	let bufnr = bufnr("%")
+	if bufnr == bufnr(a:expr)
+		noautocmd execute a:cmd
+		return
+	endif
 	let view = winsaveview()
 	try
-		noautocmd silent! execute "bufdo if bufnr('%') == " a:expr . ' | ' . a:cmd . ' | endif'
+		noautocmd silent! execute "bufdo if bufnr('%') == " a:expr . ' | ' . string(a:cmd) . ' | endif'
 	finally
 		noautocmd silent! execute "buffer" bufnr
 		call winrestview(view)
