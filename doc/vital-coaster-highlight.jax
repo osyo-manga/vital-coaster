@@ -49,47 +49,47 @@
 				*vital-coaster-highlight-functions-add()*
 add({name}, {group}, {pattern}[, {priority}])
 	|vital-coaster-highlight-object-add()| と同等です。
-	|vital-coaster-highlight がグローバル上で管理している。
+	|vital-coaster-highlight| がグローバル上で管理している。
 	|vital-coaster-highlight-object| に対して処理します。
 
 is_added({name})		*vital-coaster-highlight-functions-is_added()*
 	|vital-coaster-highlight-object-is_added()| と同等です。
-	|vital-coaster-highlight がグローバル上で管理している。
+	|vital-coaster-highlight| がグローバル上で管理している。
 	|vital-coaster-highlight-object| に対して処理します。
 
 delete({name})			*vital-coaster-highlight-functions-delete()*
 	|vital-coaster-highlight-object-delete()| と同等です。
-	|vital-coaster-highlight がグローバル上で管理している。
+	|vital-coaster-highlight| がグローバル上で管理している。
 	|vital-coaster-highlight-object| に対
 
 delete_by({expr})		*vital-coaster-highlight-functions-delete_by()*
 	|vital-coaster-highlight-object-delete_by()| と同等です。
-	|vital-coaster-highlight がグローバル上で管理している。
+	|vital-coaster-highlight| がグローバル上で管理している。
 	|vital-coaster-highlight-object| に対し
 
 delete_all()			*vital-coaster-highlight-functions-delete_all()*
 	|vital-coaster-highlight-object-delete_all()| と同等です。
-	|vital-coaster-highlight がグローバル上で管理している。
+	|vital-coaster-highlight| がグローバル上で管理している。
 	|vital-coaster-highlight-object| に対して処理します。
 
 enable({name})			*vital-coaster-highlight-functions-enable()*
 	|vital-coaster-highlight-object-enable()| と同等です。
-	|vital-coaster-highlight がグローバル上で管理している。
+	|vital-coaster-highlight| がグローバル上で管理している。
 	|vital-coaster-highlight-object| に対して処理します。
 
 enable_all({name})	*vital-coaster-highlight-functions-enable_all()*
 	|vital-coaster-highlight-object-enable_all()| と同等です。
-	|vital-coaster-highlight がグローバル上で管理している。
+	|vital-coaster-highlight| がグローバル上で管理している。
 	|vital-coaster-highlight-object| に対して処理します。
 
 disable({name})			*vital-coaster-highlight-functions-disable()*
 	|vital-coaster-highlight-object-disable()| と同等です。
-	|vital-coaster-highlight がグローバル上で管理している。
+	|vital-coaster-highlight| がグローバル上で管理している。
 	|vital-coaster-highlight-object| に対して処理します。
 
 disable_all()		*vital-coaster-highlight-functions-disable_all()*
 	|vital-coaster-highlight-object-disable_all()| と同等です。
-	|vital-coaster-highlight がグローバル上で管理している。
+	|vital-coaster-highlight| がグローバル上で管理している。
 	|vital-coaster-highlight-object| に対して処理します。
 
 
