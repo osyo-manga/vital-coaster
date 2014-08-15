@@ -63,6 +63,7 @@ function! s:_syntax_name(pos)
 endfunction
 
 
+" log : http://lingr.com/room/vim/archives/2014/08/15#message-19938628
 function! s:pos_ignore_syntaxes(pattern, syntaxes, ...)
 	let old_pos = getpos(".")
 	let old_view = winsaveview()
