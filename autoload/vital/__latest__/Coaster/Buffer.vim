@@ -192,7 +192,7 @@ endfunction
 function! s:get_block_from_region(first, last)
 	let first = a:first
 	let last  = a:last
-	echo join(map(range(a:first[1], a:last[1]), "
+	return join(map(range(a:first[1], a:last[1]), "
 \		s:get_char_from_region([first[0], v:val, first[2], first[3]], [last[0], v:val, last[2], last[3]])
 \	"), "\n")
 endfunction
