@@ -287,13 +287,22 @@ function! s:execute(expr, cmd)
 		noautocmd execute a:cmd
 		return
 	endif
-	let view = winsaveview()
+	split
 	try
-		noautocmd silent! execute "bufdo if bufnr('%') == " a:expr . ' | ' . string(a:cmd) . ' | endif'
+		execute "b" bufnr(a:expr)
+		execute a:cmd
+		quit
 	finally
 		noautocmd silent! execute "buffer" bufnr
-		call winrestview(view)
 	endtry
+
+" 	let view = winsaveview()
+" 	try
+" 		noautocmd silent! execute "bufdo if bufnr('%') == " a:expr . ' | ' . string(a:cmd) . ' | endif'
+" 	finally
+" 		noautocmd silent! execute "buffer" bufnr
+" 		call winrestview(view)
+" 	endtry
 endfunction
 
 
