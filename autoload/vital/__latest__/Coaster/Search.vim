@@ -58,5 +58,31 @@ function! s:text_by_pattern(pattern, ...)
 endfunction
 
 
+function! s:_syntax_name(pos)
+	return synIDattr(synIDtrans(synID(a:pos[0], a:pos[1], 1)), 'name')
+endfunction
+
+
+function! s:pos_ignore_syntaxes(pattern, syntaxes, ...)
+	let old_pos = getpos(".")
+	let old_view = winsaveview()
+	let flag = substitute(get(a:, 1, ""), 'n', "", "g")
+	try
+		while 1
+			let pos = searchpos(a:pattern, flag . "W")
+			if pos == [0, 0] || index(a:syntaxes, s:_syntax_name(pos)) == -1
+				return pos
+			endif
+		endwhile
+	finally
+		if get(a:, 1, "") =~# "n"
+			call setpos(".", old_pos)
+			call winrestview(old_view)
+		endif
+	endtry
+	
+endfunction
+
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
