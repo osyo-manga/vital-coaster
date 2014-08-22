@@ -27,19 +27,45 @@ function! s:region_pair(fist, last, ...)
 endfunction
 
 
-function! s:pattern_in_range(wise, first, last, pattern)
+function! s:pattern_in_region_char(first, last, pattern)
 	if a:first == a:last
-		return printf('\%%%dl\%%%dc', a:first[0], a:first[1])
+		return printf('\%%%dl\%%%dv', a:first[0], a:first[1])
 	elseif a:first[0] == a:last[0]
-		return printf('\%%%dl\%%>%dc\%%(%s\M\)\%%<%dc', a:first[0], a:first[1]-1, a:pattern, a:last[1]+1)
+		return printf('\%%%dl\%%>%dv\%%(%s\M\)\%%<%dv', a:first[0], a:first[1]-1, a:pattern, a:last[1]+1)
 	elseif a:last[0] - a:first[0] == 1
-		return  printf('\%%%dl\%%(%s\M\)\%%>%dc', a:first[0], a:pattern, a:first[1]-1)
-\		. "\\|" . printf('\%%%dl\%%(%s\M\)\%%<%dc', a:last[0], a:pattern, a:last[1]+1)
+		return  printf('\%%%dl\%%(%s\M\)\%%>%dv', a:first[0], a:pattern, a:first[1]-1)
+\		. "\\|" . printf('\%%%dl\%%(%s\M\)\%%<%dv', a:last[0], a:pattern, a:last[1]+1)
 	else
-		return  printf('\%%%dl\%%(%s\M\)\%%>%dc', a:first[0], a:pattern, a:first[1]-1)
+		return  printf('\%%%dl\%%(%s\M\)\%%>%dv', a:first[0], a:pattern, a:first[1]-1)
 \		. "\\|" . printf('\%%>%dl\%%(%s\M\)\%%<%dl', a:first[0], a:pattern, a:last[0])
-\		. "\\|" . printf('\%%%dl\%%(%s\M\)\%%<%dc', a:last[0], a:pattern, a:last[1]+1)
+\		. >"\\|" . printf('\%%%dl\%%(%s\M\)\%%<%dv', a:last[0], a:pattern, a:last[1]+1)
 	endif
+endfunction
+
+
+function! s:pattern_in_region_line(first, last, pattern)
+	return printf('\%%>%dl\%%(%s\M\)\%%<%dl', a:first[0]-1, a:pattern, a:last[0]+1)
+endfunction
+
+
+function! s:pattern_in_region_block(first, last, pattern)
+	return join(map(range(a:first[0], a:last[0]), "s:pattern_in_region_char([v:val, a:first[1]], [v:val, a:last[1]], a:pattern)"), '\|')
+endfunction
+
+
+function! s:pattern_in_region(wise, first, last, ...)
+	let pattern = get(a:, 1, "")
+	if a:wise ==# "v"
+		return s:pattern_in_region_char(a:first, a:last, pattern)
+	elseif a:wise ==# "V"
+		return s:get_line_from_region(a:first, a:last)
+	elseif a:wise ==# "\<C-v>"
+		return s:get_block_from_region(a:first, a:last)
+	endif
+endfunction
+
+function! s:pattern_in_range(...)
+	return call("s:pattern_in_region", a:000)
 endfunction
 
 
