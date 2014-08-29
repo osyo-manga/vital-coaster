@@ -58,9 +58,9 @@ function! s:pattern_in_region(wise, first, last, ...)
 	if a:wise ==# "v"
 		return s:pattern_in_region_char(a:first, a:last, pattern)
 	elseif a:wise ==# "V"
-		return s:get_line_from_region(a:first, a:last)
+		return s:pattern_in_region_line(a:first, a:last, pattern)
 	elseif a:wise ==# "\<C-v>"
-		return s:get_block_from_region(a:first, a:last)
+		return s:pattern_in_region_block(a:first, a:last, pattern)
 	endif
 endfunction
 
