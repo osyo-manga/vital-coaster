@@ -34,12 +34,12 @@ endfunction
 
 
 function! s:obj.get_option(name)
-	return self.get_variable("&" . a:name)
+	return self.get_variable("&l:" . a:name)
 endfunction
 
 
 function! s:obj.set_option(name, var)
-	return self.set_variable("&" . a:name, a:var)
+	return self.set_variable("&l:" . a:name, a:var)
 endfunction
 
 
