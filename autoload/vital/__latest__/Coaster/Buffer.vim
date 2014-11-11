@@ -321,7 +321,7 @@ endfunction
 
 
 function! s:setbufline(expr, lnum, text)
-	return s:get(a:expr).setline(a:lnum, a:tet)
+	return s:get(a:expr).setline(a:lnum, a:text)
 endfunction
 
 
