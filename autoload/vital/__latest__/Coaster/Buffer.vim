@@ -293,6 +293,18 @@ function! s:current()
 endfunction
 
 
+function! s:new(...)
+	let cmd = get(a:, 1, "")
+	new
+	let buffer = s:current()
+	quit
+	if cmd != ""
+		call buffer.open(cmd)
+	endif
+	return buffer
+endfunction
+
+
 function! s:execute(expr, cmd)
 	return s:get(a:expr).execute(a:cmd)
 endfunction
