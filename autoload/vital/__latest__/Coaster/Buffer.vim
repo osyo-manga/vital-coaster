@@ -288,6 +288,15 @@ function! s:get(bufnr)
 endfunction
 
 
+function! s:make(expr)
+	let buffer = s:get(a:expr)
+	if buffer.is_exists()
+		return buffer
+	endif
+	return s:new("", type(a:expr) == type("") ? a:expr : "")
+endfunction
+
+
 function! s:current()
 	return s:get(bufnr("%"))
 endfunction
@@ -295,7 +304,8 @@ endfunction
 
 function! s:new(...)
 	let cmd = get(a:, 1, "")
-	new
+	let name = get(a:, 2, "")
+	execute "new" name
 	let buffer = s:current()
 	quit
 	if cmd != ""
