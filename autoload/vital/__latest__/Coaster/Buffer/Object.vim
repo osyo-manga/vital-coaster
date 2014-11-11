@@ -177,6 +177,18 @@ function! s:obj.clear(...)
 endfunction
 
 
+function! s:obj.getline(...)
+	return self.invoke("getbufline", a:000)
+endfunction
+
+
+function! s:obj.open(...)
+	let open_cmd = get(a:, 1, "")
+	execute open_cmd
+	execute "buffer" self.number()
+endfunction
+
+
 function! s:make(expr)
 	let obj = deepcopy(s:obj)
 	let obj.__variable.bufnr = bufnr(a:expr)
