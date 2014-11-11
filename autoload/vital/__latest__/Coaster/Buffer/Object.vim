@@ -148,8 +148,21 @@ function! s:obj.setline(lnum, text, ...)
 endfunction
 
 
-function! s:obj.clear()
-	return self.execute("silent % delete _")
+function! s:obj.clear(...)
+	let force = get(a:, 1, 0)
+	if !(self.is_modifiable() || force)
+		return
+	endif
+	if self.tap()
+		try
+			let modifiable = &modifiable
+			set modifiable
+			silent % delete _
+		finally
+			let &modifiable = modifiable
+			call self.untap()
+		endtry
+	endif
 endfunction
 
 
