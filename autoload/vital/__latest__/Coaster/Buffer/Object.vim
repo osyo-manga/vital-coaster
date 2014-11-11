@@ -96,7 +96,7 @@ endfunction
 
 
 function! s:obj.tap_modifiable(...)
-	let force = get(a:, 1, 0)
+	let force = get(a:, 1, 1)
 	if !(self.is_modifiable() || force)
 		return
 	endif
