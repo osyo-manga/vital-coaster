@@ -77,7 +77,7 @@ function! s:obj.tap()
 	if !self.is_exists() || self.is_tapped()
 		return
 	endif
-	let self.__variable.tab_bufnr = bufnr("%")
+	let self.__variable.tap_bufnr = bufnr("%")
 	split
 	execute "b" self.number()
 	return self.number()
@@ -89,14 +89,33 @@ function! s:obj.untap()
 		return
 	endif
 	quit
-	silent! execute "buffer" self.__variable.tab_bufnr
-	unlet self.__variable.tab_bufnr
+	silent! execute "buffer" self.__variable.tap_bufnr
+	unlet self.__variable.tap_bufnr
 	return self.number()
 endfunction
 
 
+function! s:obj.tap_modifiable()
+	let result = self.tap()
+	if result
+		let self.__variable.modifiable = &modifiable
+		set modifiable
+	endif
+	return result
+endfunction
+
+
+function! s:obj.untap_modifiable()
+	if has_key(self.__variable, "modifiable")
+		let &modifiable = self.__variable.modifiable
+		unlet self.__variable.modifiable
+		call self.untap()
+	endif
+endfunction
+
+
 function! s:obj.is_tapped()
-	return has_key(self.__variable, "tab_bufnr")
+	return has_key(self.__variable, "tap_bufnr")
 endfunction
 
 
@@ -134,14 +153,11 @@ function! s:obj.setline(lnum, text, ...)
 	if !(self.is_modifiable() || force)
 		return
 	endif
-	if self.tap()
+	if self.tap_modifiable()
 		try
-			let modifiable = &modifiable
-			set modifiable
 			call setline(a:lnum, a:text)
 		finally
-			let &modifiable = modifiable
-			call self.untap()
+			call self.untap_modifiable()
 		endtry
 	endif
 " 	return self.execute("call setline(" . a:lnum . "," . string(a:text) . ")")
@@ -153,14 +169,11 @@ function! s:obj.clear(...)
 	if !(self.is_modifiable() || force)
 		return
 	endif
-	if self.tap()
+	if self.tap_modifiable()
 		try
-			let modifiable = &modifiable
-			set modifiable
 			silent % delete _
 		finally
-			let &modifiable = modifiable
-			call self.untap()
+			call self.untap_modifiable()
 		endtry
 	endif
 endfunction
