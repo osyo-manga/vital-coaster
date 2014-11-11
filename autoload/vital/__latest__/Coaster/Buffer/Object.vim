@@ -95,7 +95,11 @@ function! s:obj.untap()
 endfunction
 
 
-function! s:obj.tap_modifiable()
+function! s:obj.tap_modifiable(...)
+	let force = get(a:, 1, 0)
+	if !(self.is_modifiable() || force)
+		return
+	endif
 	let result = self.tap()
 	if result
 		let self.__variable.modifiable = &modifiable
@@ -150,10 +154,7 @@ function! s:obj.setline(lnum, text, ...)
 " 	endif
 
 	let force = get(a:, 1, 0)
-	if !(self.is_modifiable() || force)
-		return
-	endif
-	if self.tap_modifiable()
+	if self.tap_modifiable(force)
 		try
 			call setline(a:lnum, a:text)
 		finally
@@ -166,10 +167,7 @@ endfunction
 
 function! s:obj.clear(...)
 	let force = get(a:, 1, 0)
-	if !(self.is_modifiable() || force)
-		return
-	endif
-	if self.tap_modifiable()
+	if self.tap_modifiable(force)
 		try
 			silent % delete _
 		finally
