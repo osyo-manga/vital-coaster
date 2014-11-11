@@ -13,23 +13,38 @@ function! s:obj.number()
 endfunction
 
 
+function! s:obj.invoke(func, args)
+	return call(a:func, [self.number()] + a:args)
+endfunction
+
+
 function! s:obj.name()
-	return bufname(self.number())
+	return self.invoke("bufname")
 endfunction
 
 
 function! s:obj.get_variable(...)
-	return call("getbufvar", [self.number()] + a:000)
+	return self.invoke("getbufvar", a:000)
 endfunction
 
 
 function! s:obj.set_variable(...)
-	return call("setbufvar", [self.number()] + a:000)
+	return self.invoke("setbufvar", a:000)
+endfunction
+
+
+function! s:obj.get_option(name)
+	return self.get_variable("&" . a:name)
+endfunction
+
+
+function! s:obj.set_option(name, var)
+	return self.set_variable("&" . a:name, a:var)
 endfunction
 
 
 function! s:obj.winnr()
-	return bufwinnr(self.number())
+	return self.invoke("bufwinnr")
 endfunction
 
 
@@ -39,12 +54,12 @@ endfunction
 
 
 function! s:obj.is_listed()
-	return buflisted(self.number())
+	return self.invoke("buflisted")
 endfunction
 
 
 function! s:obj.is_loaded()
-	return bufloaded(self.number())
+	return self.invoke("bufloaded")
 endfunction
 
 
@@ -54,7 +69,7 @@ endfunction
 
 
 function! s:obj.is_modifiable()
-	return self.get_variable("&modifiable")
+	return self.get_option("modifiable")
 endfunction
 
 
