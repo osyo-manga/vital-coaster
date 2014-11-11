@@ -2,15 +2,19 @@ scriptencoding utf-8
 let s:save_cpo = &cpo
 set cpo&vim
 
+
+
 function! s:_vital_loaded(V)
 	let s:V = a:V
 	let s:Search = a:V.import("Coaster.Search")
+	let s:Object = a:V.import("Coaster.Buffer.Object")
 endfunction
 
 
 function! s:_vital_depends()
 	return [
-\		"Coaster.Search"
+\		"Coaster.Search",
+\		"Coaster.Buffer.Object"
 \	]
 endfunction
 
@@ -192,9 +196,7 @@ endfunction
 function! s:get_block_from_region(first, last)
 	let first = a:first
 	let last  = a:last
-	return join(map(range(a:first[1], a:last[1]), "
-\		s:get_char_from_region([first[0], v:val, first[2], first[3]], [last[0], v:val, last[2], last[3]])
-\	"), "\n")
+	return join(map(range(a:first[1], a:last[1]), "s:get_char_from_region([first[0], v:val, first[2], first[3]], [last[0], v:val, last[2], last[3]])"), "\n")
 endfunction
 
 
@@ -281,28 +283,18 @@ function! s:get_region_from_textobj(textobj)
 endfunction
 
 
-function! s:execute(expr, cmd)
-	let bufnr = bufnr("%")
-	if bufnr == bufnr(a:expr)
-		noautocmd execute a:cmd
-		return
-	endif
-	split
-	try
-		execute "b" bufnr(a:expr)
-		execute a:cmd
-		quit
-	finally
-		noautocmd silent! execute "buffer" bufnr
-	endtry
+function! s:get(bufnr)
+	return s:Object.make(a:bufnr)
+endfunction
 
-" 	let view = winsaveview()
-" 	try
-" 		noautocmd silent! execute "bufdo if bufnr('%') == " a:expr . ' | ' . string(a:cmd) . ' | endif'
-" 	finally
-" 		noautocmd silent! execute "buffer" bufnr
-" 		call winrestview(view)
-" 	endtry
+
+function! s:current()
+	return s:get(bufnr("%"))
+endfunction
+
+
+function! s:execute(expr, cmd)
+	return s:get(a:expr).execute(a:cmd)
 endfunction
 
 
@@ -317,17 +309,7 @@ endfunction
 
 
 function! s:setbufline(expr, lnum, text)
-" 	if has("python")
-" 		return s:setbufline_if_python(a:expr, a:lnum, a:text)
-" 	else
-" 		return s:execute(bufnr(a:expr), "call setline(" . a:lnum . "," . string(a:text) . ")")
-" 	endif
-	return s:execute(bufnr(a:expr), "call setline(" . a:lnum . "," . string(a:text) . ")")
-endfunction
-
-
-function! s:clear()
-	silent % delete _
+	return s:get(a:expr).setline(a:lnum, a:tet)
 endfunction
 
 
