@@ -303,14 +303,17 @@ endfunction
 
 
 function! s:new(...)
-	let cmd = get(a:, 1, "")
-	let name = get(a:, 2, "")
+	let name = get(a:, 1, "")
 	execute "new" name
 	let buffer = s:current()
 	quit
-	if cmd != ""
-		call buffer.open(cmd)
-	endif
+	return buffer
+endfunction
+
+
+function! s:open(cmd)
+	let buffer = s:new()
+	call buffer.open(a:cmd)
 	return buffer
 endfunction
 
