@@ -13,8 +13,9 @@ function! s:obj.number()
 endfunction
 
 
-function! s:obj.invoke(func, args)
-	return call(a:func, [self.number()] + a:args)
+function! s:obj.invoke(func, ...)
+	let args = get(a:, 1, [])
+	return call(a:func, [self.number()] + args)
 endfunction
 
 
@@ -70,6 +71,11 @@ endfunction
 
 function! s:obj.is_modifiable()
 	return self.get_option("modifiable")
+endfunction
+
+
+function! s:obj.is_opened_in_current_tabpage()
+	return self.winnr() != -1
 endfunction
 
 
@@ -189,11 +195,17 @@ function! s:obj.open(...)
 endfunction
 
 
+function! s:obj.set_name(name)
+	return self.execute(":file " . string(a:name))
+endfunction
+
+
 function! s:make(expr)
 	let obj = deepcopy(s:obj)
 	let obj.__variable.bufnr = bufnr(a:expr)
 	return obj
 endfunction
+
 
 
 let &cpo = s:save_cpo
