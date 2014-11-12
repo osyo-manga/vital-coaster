@@ -195,6 +195,19 @@ function! s:obj.open(...)
 endfunction
 
 
+function! s:obj.delete(...)
+	let force = get(a:, 1, 0)
+	if self.is_exists()
+		try
+			execute "bdelete" . (force ? "! " : " ") . self.number()
+			return 0
+		catch
+			return -1
+		endtry
+	endif
+endfunction
+
+
 function! s:obj.set_name(name)
 	return self.execute(":file " . string(a:name))
 endfunction
