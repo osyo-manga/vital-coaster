@@ -6,6 +6,9 @@
 *Vital.Coaster.Highlight* はバッファのハイライトの管理を行います。
 
 
+- Requires 
+  vital-gift https://github.com/osyo-manga/vital-gift
+
 
 ==============================================================================
 使い方					*Vital.Coaster.Highlight-usage*
