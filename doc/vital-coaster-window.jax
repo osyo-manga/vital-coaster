@@ -1,0 +1,40 @@
+*vital-coaster-window.txt*	ウィンドウに関するモジュール
+
+
+==============================================================================
+概要					*Vital.Coaster.Window-introduction*
+
+*Vital.Coaster.Window* はウィンドウに関するモジュールです。
+
+
+==============================================================================
+インターフェース			*Vital.Coaster.Window-interface*
+
+------------------------------------------------------------------------------
+関数					*Vital.Coaster.Window-functions*
+
+windo({func}, {arglist} [, {dict}])		*Vital.Coaster.Window.windo()*
+	{func} を |window| で実行します。
+	これは、以下のような処理と同じです。
+>
+	noautocmd windo call call(a:func, a:args, a:dict)
+<
+
+
+as_windo({dict})				*Vital.Coaster.Window.as_windo()*
+	{dict} で定義されている関数参照を |windo| で実行されるようにラップ
+	します。
+Example: >
+	let dict = {}
+	function! dict.func()
+	    call append(".", "func")
+	endfunction
+
+	let windo = as_windo(dict)
+	" すべてのウィンドウに対して dict.func() が実行される
+	call windo.func()
+<
+
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl
