@@ -95,6 +95,12 @@ disable_all()			*Vital.Coaster.Highlight.disable_all()*
 	|Vital.Coaster.Highlight| がグローバル上で管理している。
 	|Vital.Coaster.Highlight-object| に対して処理します。
 
+as_windo()			*Vital.Coaster.Highlight.as_windo()*
+	|Vital.Coaster.Highlight-object-as_windo()| と同等です。
+	|Vital.Coaster.Highlight| がグローバル上で管理している。
+	|Vital.Coaster.Highlight-object| に対して処理します。
+
+
 
 make()					*Vital.Coaster.Highlight.make()*
 	|Vital.Coaster.Highlight-object| を生成します。
@@ -156,7 +162,13 @@ object.disable_all()		*Vital.Coaster.Highlight-object-disable_all()*
 	現在のバッファで |Vital.Coaster.Highlight-object-enable()|等で行った
 	すべてのハイライトを無効にします。
 
-
+object.as_windo()		*Vital.Coaster.Highlight-object-as_windo()*
+	自身を |Vital.Coaster.Window.as_windo()| に適用したオブジェクトを返し
+	ます。
+Example: >
+	" すべてのウィンドウで "homu" ハイライトを有効にする
+	call object.as_windo().enable("homu")
+<
 
 ==============================================================================
 vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl
