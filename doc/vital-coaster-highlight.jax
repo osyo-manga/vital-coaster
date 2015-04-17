@@ -1,5 +1,6 @@
 *vital-coaster-highlight.txt*	ウィンドウのハイライトを管理する
 
+
 ==============================================================================
 概要					*Vital.Coaster.Highlight-introduction*
 
@@ -65,7 +66,7 @@ delete({name})				*Vital.Coaster.Highlight.delete()*
 	|Vital.Coaster.Highlight| がグローバル上で管理している。
 	|Vital.Coaster.Highlight-object| に対
 
-delete_by({expr}	)		*Vital.Coaster.Highlight.delete_by()*
+delete_by({expr})			*Vital.Coaster.Highlight.delete_by()*
 	|Vital.Coaster.Highlight-object-delete_by()| と同等です。
 	|Vital.Coaster.Highlight| がグローバル上で管理している。
 	|Vital.Coaster.Highlight-object| に対し
@@ -95,10 +96,21 @@ disable_all()			*Vital.Coaster.Highlight.disable_all()*
 	|Vital.Coaster.Highlight| がグローバル上で管理している。
 	|Vital.Coaster.Highlight-object| に対して処理します。
 
-as_windo()			*Vital.Coaster.Highlight.as_windo()*
+as_windo()				*Vital.Coaster.Highlight.as_windo()*
 	|Vital.Coaster.Highlight-object-as_windo()| と同等です。
 	|Vital.Coaster.Highlight| がグローバル上で管理している。
 	|Vital.Coaster.Highlight-object| に対して処理します。
+
+update({name})				*Vital.Coaster.Highlight.update()*
+	|Vital.Coaster.Highlight-object-update()| と同等です。
+	|Vital.Coaster.Highlight| がグローバル上で管理している。
+	|Vital.Coaster.Highlight-object| に対して処理します。
+
+update_all()			*Vital.Coaster.Highlight.update_all()*
+	|Vital.Coaster.Highlight-object-update_all()| と同等です。
+	|Vital.Coaster.Highlight| がグローバル上で管理している。
+	|Vital.Coaster.Highlight-object| に対して処理します。
+
 
 
 
@@ -169,6 +181,15 @@ Example: >
 	" すべてのウィンドウで "homu" ハイライトを有効にする
 	call object.as_windo().enable("homu")
 <
+object.update({name})		*Vital.Coaster.Highlight-object-update()*
+	|Vital.Coaster.Highlight-object-disable()| 後に
+	|Vital.Coaster.Highlight-object-enable()| を実行します。
+<
+object.update_all()		*Vital.Coaster.Highlight-object-update_all()*
+	|Vital.Coaster.Highlight-object-disable_all()| 後に
+	|Vital.Coaster.Highlight-object-enable_all()| を実行します。
+
+
 
 ==============================================================================
 vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl
