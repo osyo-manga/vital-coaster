@@ -12,13 +12,13 @@ call s:highlighter.add("number", "MoreMsg", '\d')
 
 
 function! CoasterHighlight()
-	" 現在のバッファで
+	" 現在のウィンドウで
 	" add で設定したハイライトを有効にする
 	call s:highlighter.enable_all()
 endfunction
 
 function! CoasterUnhighlight()
-	" 現在のバッファで
+	" 現在のウィンドウで
 	" add で設定したハイライトを無効にする
 	call s:highlighter.disable_all()
 endfunction

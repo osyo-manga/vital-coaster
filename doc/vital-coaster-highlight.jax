@@ -1,9 +1,9 @@
-*vital-coaster-highlight.txt*	バッファのハイライトを管理する
+*vital-coaster-highlight.txt*	ウィンドウのハイライトを管理する
 
 ==============================================================================
 概要					*Vital.Coaster.Highlight-introduction*
 
-*Vital.Coaster.Highlight* はバッファのハイライトの管理を行います。
+*Vital.Coaster.Highlight* はウィンドウのハイライトの管理を行います。
 
 
 - Requires 
@@ -14,7 +14,7 @@
 使い方					*Vital.Coaster.Highlight-usage*
 
 |Vital.Coaster.Highlight-object-add()| 等でハイライトの設定を追加し、
-|Vital.Coaster.Highlight-object-enable()| で任意のバッファにハイライトを適用し
+|Vital.Coaster.Highlight-object-enable()| で任意のウィンドウにハイライトを適用し
 て使用します。
 >
 	let s:Highlight = vital#of("vital").import("Coaster.Highlight")
@@ -30,13 +30,13 @@
 	
 	
 	function! CoasterHighlight()
-		" 現在のバッファで
+		" 現在のウィンドウで
 		" add で設定したハイライトを有効にする
 		call s:highlighter.enable_all()
 	endfunction
 	
 	function! CoasterUnhighlight()
-		" 現在のバッファで
+		" 現在のウィンドウで
 		" add で設定したハイライトを無効にする
 		call s:highlighter.disable_all()
 	endfunction
@@ -147,19 +147,19 @@ object.delete_all()		*Vital.Coaster.Highlight-object-delete_all()*
 	す。
 
 object.enable({name})		*Vital.Coaster.Highlight-object-enable()*
-	現在のバッファで |Vital.Coaster.Highlight-object-add()| で設定した
+	現在のウィンドウで |Vital.Coaster.Highlight-object-add()| で設定した
 	{name} のハイライトを行います。
 
 object.enable_all({name})	*Vital.Coaster.Highlight-object-enable_all()*
-	現在のバッファで |Vital.Coaster.Highlight-object-add()| で設定した
+	現在のウィンドウで |Vital.Coaster.Highlight-object-add()| で設定した
 	すべての設定のハイライトを行います。
 
 object.disable({name})		*Vital.Coaster.Highlight-object-disable()*
-	現在のバッファで |Vital.Coaster.Highlight-object-enable()|等で行った
+	現在のウィンドウで |Vital.Coaster.Highlight-object-enable()|等で行った
 	{name} のハイライトを無効にします。
 
 object.disable_all()		*Vital.Coaster.Highlight-object-disable_all()*
-	現在のバッファで |Vital.Coaster.Highlight-object-enable()|等で行った
+	現在のウィンドウで |Vital.Coaster.Highlight-object-enable()|等で行った
 	すべてのハイライトを無効にします。
 
 object.as_windo()		*Vital.Coaster.Highlight-object-as_windo()*
